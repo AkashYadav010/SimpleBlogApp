@@ -19,6 +19,6 @@ from blogapp.views import home,add_blog
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
-    path('addblog/', add_blog)
+    path('', home, name='home'), 
+    path('addblog/', add_blog, name="addblog")
 ]
