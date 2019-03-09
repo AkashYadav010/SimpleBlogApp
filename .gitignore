@@ -1,2 +1,3 @@
 lib/*
 share/*
+src/blogapp/__pycache__/*
