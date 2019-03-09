@@ -1,6 +1,7 @@
 from django.shortcuts import render,HttpResponse,redirect
 from .models import Blog
-from blog.forms import AddForm
+from django.contrib.auth import authenticate,login,logout
+from blog.forms import AddForm,LoginForm
 
 def home(request):
     blog = Blog.objects.all()
@@ -14,6 +15,20 @@ def home(request):
         }
     return render(request, "home.html", context)
 
+def login_page(request):
+    form = LoginForm(request.POST or None)
+    context = {
+    'form':form
+    }
+    if form.is_valid():
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+        user     = authenticate(request, username=username,password=password)
+        if user is not None:
+            login(request,user)
+            return redirect("/")
+    return render(request,"login_page.html", context)
+
 
 
 def add_blog(request):
@@ -23,7 +38,6 @@ def add_blog(request):
     }
     if add_form.is_valid():
         new_blog = Blog()
-        print(add_form.cleaned_data)
         new_blog.title = add_form.cleaned_data.get('title')
         new_blog.content = add_form.cleaned_data.get('content')
         new_blog.author = request.user
