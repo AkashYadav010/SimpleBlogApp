@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block main %}
-{% for blog in blogs %}
-<div class="container">
+<div class="container mt-auto" id="blog_view">
   <div class="row">
-    <div class="col-6">
-      <h3>{{blog.title}}</h3>
-      <hr>
-      <p>{{blog.content}}<br><sub><strong>By:{{blog.author}}</strong></sub></p>
+    {% for blog in blogs %}
+    <div class="col-4">
+      <div class="card">
+          <div class="card-header">
+            {{blog.title}}
+          </div>
+        <img class="card-img-bottom" src="{{blog.image.url}}" alt="{{blog.titile}} image">
+        <div class="card-body">
+          {{blog.content|truncatewords:20}}
+        </div>
+      </div>
     </div>
+    {% endfor %}
   </div>
 </div>
-{% endfor %}
 {% endblock %}

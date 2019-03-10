@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Blog(models.Model):
     title       = models.CharField(max_length = 25)
+    image       = models.ImageField(null=True,blank=True)
     content     = models.TextField(max_length = 350)
     author      = models.ForeignKey(User, on_delete = models.CASCADE)
 
