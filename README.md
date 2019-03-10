@@ -5,3 +5,6 @@ A simple blog app built with Django
 
 ## login 
 ![](images/loginblog.png)
+
+### Addblog
+![](images/blogadd.png)
