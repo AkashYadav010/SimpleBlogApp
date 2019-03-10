@@ -30,7 +30,6 @@ def login_page(request):
     return render(request,"login_page.html", context)
 
 
-
 def add_blog(request):
     add_form = AddForm(request.POST or None)
     context = {
