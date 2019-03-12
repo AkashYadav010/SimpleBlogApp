@@ -18,14 +18,19 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from blogapp.views import home,add_blog,login_page
+from blogapp.views import HomeView
+from blogapp.views import add_blog,login_page,detail_view,update_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
-    path('addblog/', add_blog, name="addblog"),    
+    # path('', home, name='home'),
+    path('', HomeView.as_view(), name='home'),
+    # path('<int:id>', BlogDetailView.as_view(), name='detail'),
+    path('addblog/', add_blog, name="addblog"),
     path('login/', login_page, name="login"),
-    path('logout/', LogoutView.as_view(), name="logout")
+    path('logout/', LogoutView.as_view(), name="logout"),
+    path('blog/<int:id>/',detail_view, name="detail"),
+    path('blog/update/<int:id>/',update_view, name="update")
 
 ]
 if settings.DEBUG:

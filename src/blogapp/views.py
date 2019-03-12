@@ -1,19 +1,29 @@
 from django.shortcuts import render,HttpResponse,redirect
 from .models import Blog
 from django.contrib.auth import authenticate,login,logout
-from blog.forms import AddForm,LoginForm
+from blog.forms import AddForm,LoginForm,UpdateForm
+from django.views.generic import ListView,DetailView
 
-def home(request):
-    blog = Blog.objects.all()
-    if blog is not None:
-        context = {
-        'blogs':blog,
-        }
-    else:
-        context={
-        'msg':"Sorry No Blogs Yet"
-        }
-    return render(request, "home.html", context)
+# def home(request):
+#     blog = Blog.objects.all()
+#     print(blog)
+#     if blog is not None:
+#         context = {
+#         'blogs':blog,
+#         }
+#     else:
+#         context={
+#         'msg':"Sorry No Blogs Yet"
+#         }
+#     return render(request, "home.html", context)
+class HomeView(ListView):
+    queryset = Blog.objects.all()
+    template_name = "home.html"
+    def get_context_data(self, *args, **kwargs):
+        context = super(HomeView, self).get_context_data(*args, **kwargs)
+        print(context)
+        return context
+
 
 def login_page(request):
     form = LoginForm(request.POST or None)
@@ -43,3 +53,24 @@ def add_blog(request):
         new_blog.save()
         return redirect("/")
     return render(request, "addform.html", context)
+
+def detail_view(request, id, *args, **kwargs):
+    qs =  Blog.objects.filter(pk=id)
+    if qs.exists():
+        context = {
+        'foundblog':qs.first()
+        }
+    else:
+        return redirect("/")
+    return render(request, "detail.html", context)
+
+def update_view(request,id ,*args ,**kwargs):
+    qs = Blog.objects.get(pk=id)
+    form = UpdateForm(request.POST or None, instance=qs)
+    context = {
+    'form':form
+    }
+    if form.is_valid():
+        form.save()
+        return redirect("/blog/"+str(id))
+    return render(request, 'update.html', context)

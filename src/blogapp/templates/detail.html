@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<div class="container-fluid">
+  <div class="card"  style="background-color:steelblue;color:black;">
+    <div class="card-header">
+      {{foundblog.title}}
+      {% if foundblog.image %}
+      <img class="card-img-bottom" src="{{foundblog.image.url}}" alt="{{foundblog.titile}} image">
+      {% endif %}
+    </div>
+    <div class="card-body">
+      {{foundblog.content}}
+    </div>
+    <div class="card-footer">
+    <strong><p>BY: {{foundblog.author}}</p></strong>
+    </div>
+  </div>
+</div>
+{% endblock %}

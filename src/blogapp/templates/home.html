@@ -3,15 +3,20 @@
 {% block main %}
 <div class="container mt-auto" id="blog_view">
   <div class="row">
-    {% for blog in blogs %}
+    {% for blog in object_list %}
     <div class="col-4">
       <div class="card">
           <div class="card-header">
             {{blog.title}}
           </div>
+          {% if blog.image %}
         <img class="card-img-bottom" src="{{blog.image.url}}" alt="{{blog.titile}} image">
+          {% endif %}
         <div class="card-body">
           {{blog.content|truncatewords:20}}
+        </div>
+        <div class="card-footer">
+          <a class="btn" href="{% url 'detail' blog.id %}">Read..</a>
         </div>
       </div>
     </div>
