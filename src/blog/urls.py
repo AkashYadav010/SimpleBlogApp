@@ -19,7 +19,7 @@ from django.conf import settings
 from django.urls import path
 from django.contrib.auth.views import LogoutView
 from blogapp.views import HomeView
-from blogapp.views import add_blog,login_page,detail_view,update_view
+from blogapp.views import add_blog,login_page,detail_view,update_view,delete_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +30,8 @@ urlpatterns = [
     path('login/', login_page, name="login"),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('blog/<int:id>/',detail_view, name="detail"),
-    path('blog/update/<int:id>/',update_view, name="update")
+    path('blog/update/<int:id>/',update_view, name="update"),
+    path('blog/delete/<int:id>/',delete_view, name="delete")
 
 ]
 if settings.DEBUG:

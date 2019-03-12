@@ -74,3 +74,14 @@ def update_view(request,id ,*args ,**kwargs):
         form.save()
         return redirect("/blog/"+str(id))
     return render(request, 'update.html', context)
+
+
+def delete_view(request, id, *args, **kwargs):
+    qs = Blog.objects.get(pk=id)
+    context = {
+    'foundblog':qs
+    }
+    if request.method == "POST":
+        qs.delete()
+        return redirect("home")
+    return render(request,'delete.html',context)
